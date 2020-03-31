@@ -1506,19 +1506,20 @@ def get_license_info(license_text, allowed_license_families):
     """
 
     # The list order matters. The first element should be the name of the
-    # license file shipped with r-base.
-    d_license = {'agpl3': ['AGPL-3', 'AGPL (>= 3)', 'AGPL',
+    # license file shipped with r-base and the second element should be the
+    # spdx short identifier from https://spdx.org/licenses/.
+    d_license = {'agpl3': ['AGPL-3', 'AGPL-3.0', 'AGPL (>= 3)', 'AGPL',
                            'GNU Affero General Public License'],
-                 'artistic2': ['Artistic-2.0', 'Artistic License 2.0'],
-                 'gpl2': ['GPL-2', 'GPL (>= 2)', 'GNU General Public License (>= 2)'],
-                 'gpl3': ['GPL-3', 'GPL (>= 3)', 'GNU General Public License (>= 3)',
+                 'artistic2': ['Artistic-2.0', 'Artistic-2.0', 'Artistic License 2.0'],
+                 'gpl2': ['GPL-2', 'GPL-2.0', 'GPL (>= 2)', 'GNU General Public License (>= 2)'],
+                 'gpl3': ['GPL-3', 'GPL-3.0', 'GPL (>= 3)', 'GNU General Public License (>= 3)',
                           'GPL', 'GNU General Public License'],
-                 'lgpl2': ['LGPL-2', 'LGPL (>= 2)'],
-                 'lgpl21': ['LGPL-2.1', 'LGPL (>= 2.1)'],
-                 'lgpl3': ['LGPL-3', 'LGPL (>= 3)', 'LGPL',
+                 'lgpl2': ['LGPL-2', 'LGPL-2.0', 'LGPL (>= 2)'],
+                 'lgpl21': ['LGPL-2.1', 'LGPL-2.1', 'LGPL (>= 2.1)'],
+                 'lgpl3': ['LGPL-3', 'LGPL-3.0', 'LGPL (>= 3)', 'LGPL',
                            'GNU Lesser General Public License'],
-                 'bsd2': ['BSD_2_clause', 'BSD_2_Clause', 'BSD 2-clause License'],
-                 'bsd3': ['BSD_3_clause', 'BSD_3_Clause', 'BSD 3-clause License'],
+                 'bsd2': ['BSD_2_clause', 'BSD-2-Clause', 'BSD_2_Clause', 'BSD 2-clause License'],
+                 'bsd3': ['BSD_3_clause', 'BSD-3-Clause', 'BSD_3_Clause', 'BSD 3-clause License'],
                  'mit': ['MIT'],
                  }
 
@@ -1538,10 +1539,8 @@ def get_license_info(license_text, allowed_license_families):
         # license id string to match
         for license_id in d_license.keys():
             if l_opt in d_license[license_id]:
-                l_opt_text = d_license[license_id][0]
-
-                license_texts.append(l_opt_text)
-                license_files.append(license_file_template.format(license_id=l_opt_text))
+                license_texts.append(d_license[license_id][1])
+                license_files.append(license_file_template.format(license_id=d_license[license_id][0]))
                 break
 
     # Join or fallback to original license_text if matched license_texts is empty
